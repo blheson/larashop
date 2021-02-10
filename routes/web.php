@@ -3,6 +3,9 @@
 use App\Http\Controllers\ContactUsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\VegetablesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +23,12 @@ Route::get('/admin', [PagesController::class, 'admin']);
 Route::get('/about', [PagesController::class, 'about']);
 Route::get('/contact', [ContactUsController::class, 'index']);
 Route::get('/checkout', [PagesController::class, 'checkout']);
+Route::get('/pay', [PagesController::class, 'pay']);
 Route::post('/contact', [ContactUsController::class, 'store']);
-Route::resource('/cart', CartController::class);
-Route::resource('vegetables', VegetablesController::class);
+
+Route::get('/vegetables/{id}/{title}', [VegetablesController::class, 'show']);
+Route::resources([
+    '/vegetables' => VegetablesController::class,
+    '/cart' => CartController::class,
+    '/orders' => OrdersController::class
+]);

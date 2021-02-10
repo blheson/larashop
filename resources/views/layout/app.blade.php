@@ -22,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/custom.css')}}" rel="stylesheet" />
     <!-- responsive style -->
     <link href="{{asset('css/responsive.css')}}" rel="stylesheet" />
 </head>
@@ -44,7 +45,8 @@
 
  
     @include('includes.footer')
-    <script type="text/javascript" src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
+ 
+    <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/bootstrap.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/custom.js')}}"></script>
     <!-- Google Map -->

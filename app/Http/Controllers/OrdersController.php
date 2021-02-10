@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
-use App\Models\User;
-use App\Models\Vegetable;
+use App\Models\Order;
 use Illuminate\Http\Request;
-use Session;
-use Illuminate\Support\Facades\Auth;
 
-class CartController extends Controller
+class OrdersController extends Controller
 {
-    protected $cart;
-    public function __construct(){
-
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +14,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $data = [];
-        return view('cart.index', ['data' => $data]);
+        echo 'index';
     }
 
     /**
@@ -33,12 +24,9 @@ class CartController extends Controller
      */
     public function create()
     {
-        //
+        echo 'create';
     }
-    private function initCart()
-    {
-        return new Cart;
-    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -47,38 +35,21 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        // session()->invalidate();
-        $id = (int) $request->id;
-        $cartItems  = session()->get('cart');
-        // $product = Vegetable::find($id);
-        $price = (float) $request->price;
-        $newItems = [
-            'id' => $id,
-            'quantity' => (int) $request->quantity,
-            'price'=> $price,
-            'title'=> $request->title
-        ];
-        if (is_array($cartItems)) {
-            $cartItems[$id] = $newItems;
-        } else {
-            $cartItems = [$id => $newItems];
-        }
-
-
-        session()->put('cart', $cartItems);
-        // $user_id = Auth::check() ? $request->session->get('users')['id'] : $request->cookie('larashop_session');  
+        $order = new Order;
         $user_id = getUserId($request);
-        $cart = Cart::updateOrCreate([
-            'user_id' => $user_id
-        ], [
-            'items' => json_encode($request->session()->get('cart'))
-        ]);
-        if ($cart)
-            $request->session()->flash('success', 'Item added to cart successfully');
+
+        $order->name = $request->name;
+        $order->user_id = $user_id;
+        $order->email = $request->email;
+        $order->phone = $request->phone;
+        $order->address = $request->address;
+        $order->cartItems = $request->cartItems;
+
+        if ($order->save())
+            $request->session()->flash('success', 'Order saved successfully');
         else
             $request->session()->flash('error', 'Error in cart');
-
-       return redirect(url()->previous());
+        return redirect('/pay');
     }
 
     /**
@@ -89,7 +60,7 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        //
+        echo 'show';
     }
 
     /**
@@ -100,7 +71,7 @@ class CartController extends Controller
      */
     public function edit($id)
     {
-        //
+        echo 'edit';
     }
 
     /**
@@ -112,7 +83,7 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        echo 'update';
     }
 
     /**
@@ -123,6 +94,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        echo 'destroy';
     }
 }

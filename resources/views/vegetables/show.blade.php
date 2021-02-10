@@ -40,7 +40,7 @@
                     <button class="btn btn-success addToCart" type="submit">Add to cart</button>
                 </form>
                 <div>
-                    <a href="checkout" class="btn btn-success">Checkout</a>
+                    <a href="/checkout" class="btn btn-success">Checkout</a>
                 </div>
             </div>
         </div>

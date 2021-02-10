@@ -1,51 +1,59 @@
+<header class="header_section">
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg custom_nav-container">
+      <a class="navbar-brand" href="/">
+        <span>
+          {{env('APP_NAME')}}
+        </span>
+      </a>
+      <div class="" id="">
+        <div class="container">
+          <div class=" mr-auto flex-column flex-lg-row align-items-center">
+            <ul class="navbar-nav justify-content-between ">
+              <div class="User_option">
+               
 
-    <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container">
-          <a class="navbar-brand" href="/">
-            <span>
-              {{env('APP_NAME')}}
-            </span>
-          </a>
-          <div class="" id="">
-            <div class="container">
-              <div class=" mr-auto flex-column flex-lg-row align-items-center">
-                <ul class="navbar-nav justify-content-between ">
-                  <div class="User_option">
-                    <li class="">
-                      <a class="" href="">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <form class="form-inline ">
-                      <button class="btn   nav_search-btn" type="submit">
+                <div class="nav_form mr-2">
+                  <form class="form-inline form_container" action="vegetables">
+                    <div class="d-none" id="searchInput">
+                       <button class="btn nav_search-btn" type="submit">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                      </button>
-                    </form>
-                  </div>
-                </ul>
-              </div>
-            </div>
+                      </button><input type="text" name="search" value="{{request()->get('search')??''}}">
+                    </div>
+                    <div style="cursor: pointer;">
+                      <span onclick="DOM.openSearch()"><i id="toggle_search" class="fa fa-search text-white" aria-hidden="true"></i></span>
+                    </div>
 
-            <div class="custom_menu-btn">
-              <button onclick="openNav()">
-                <span class="s-1"> </span>
-                <span class="s-2"> </span>
-                <span class="s-3"> </span>
-              </button>
-            </div>
-            <div id="myNav" class="overlay">
-              <div class="overlay-content">
-                <a href="/">HOME</a>
-                <a href="/about">ABOUT</a>
-                <a href="/vegetables">VEGETABLES</a>
-                <a href="/cart">CART</a>
-                <a href="/checkout">CHECKOUT</a>
-                <a href="/contact">CONTACT US</a>
+                  </form>
+                </div>
+                <li class="">
+                  <a class="account" href="">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                  </a>
+                </li>
               </div>
-            </div>
+            </ul>
           </div>
-        </nav>
+        </div>
+
+        <div class="custom_menu-btn">
+          <button onclick="DOM.openNav()">
+            <span class="s-1"> </span>
+            <span class="s-2"> </span>
+            <span class="s-3"> </span>
+          </button>
+        </div>
+        <div id="myNav" class="overlay">
+          <div class="overlay-content">
+            <a href="/">HOME</a>
+            <a href="/about">ABOUT</a>
+            <a href="/vegetables">VEGETABLES</a>
+            <a href="/cart">CART</a>
+            <a href="/checkout">CHECKOUT</a>
+            <a href="/contact">CONTACT US</a>
+          </div>
+        </div>
       </div>
-    </header>
-   
+    </nav>
+  </div>
+</header>

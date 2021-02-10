@@ -28,12 +28,9 @@ class PagesController extends Controller
 
         // echo 'here';
     }
-    public function check()
+    public function pay()
     {
-        return view('checkout');
-        // return view('about');
-
-        // echo 'here';
+        return view('pay');
     }
     public function cart()
     {

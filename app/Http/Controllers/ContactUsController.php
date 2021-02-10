@@ -15,7 +15,6 @@ class ContactUsController extends Controller
         var_dump(session()->get('all'));
     }
     public function index(){
-      
             return view('contact');
         
     }

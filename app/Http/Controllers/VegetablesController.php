@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Vegetable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VegetablesController extends Controller
 {
@@ -14,9 +14,10 @@ class VegetablesController extends Controller
      */
     public function index()
     {
-        $data = Vegetable::orderBy('created_at','desc')->paginate(10);
-        // dd($data->items());
-        return view('vegetables.index', ['vegetables'=>$data]);
+        $search = request()->query('search');
+        $data = DB::table('vegetables')->where('title', 'like', '%'.$search.'%')->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('vegetables.index', ['vegetables' => $data]);
     }
 
     /**
@@ -27,7 +28,6 @@ class VegetablesController extends Controller
     public function create()
     {
         return view('vegetables.create');
-        
     }
 
     /**
@@ -39,7 +39,6 @@ class VegetablesController extends Controller
     public function store(Request $request)
     {
         return view('vegetables.store');
-        
     }
 
     /**

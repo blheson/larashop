@@ -266,18 +266,19 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form_container contact-form">
-                    <form action="">
+                    <form action="contact" method="post">
+                    @csrf
                         <div>
-                            <input type="text" placeholder="Your Name" />
+                            <input type="text" name="name" placeholder="Your Name" required/>
                         </div>
                         <div>
-                            <input type="text" placeholder="Phone Number" />
+                            <input  type="text" name="phone" placeholder="Phone Number" required/>
                         </div>
                         <div>
-                            <input type="email" placeholder="Email" />
+                            <input  type="email" name="email" placeholder="Email" required/>
                         </div>
                         <div>
-                            <input type="text" class="message-box" placeholder="Message" />
+                            <input  type="text" name="message" class="message-box" placeholder="Message" />
                         </div>
                         <div class="btn_box">
                             <button>

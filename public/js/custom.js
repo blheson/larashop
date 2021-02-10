@@ -1,9 +1,31 @@
-// navigation menu overlay toggle
-function openNav() {
-    document.getElementById("myNav").classList.toggle("menu_width");
-    document.querySelector(".custom_menu-btn").classList.toggle("menu_btn-style");
+const helper = {
+    select: (dom)=>{
+        return document.querySelector(dom);
+    }
+}
+const DOM = {
+    openNav: ()=>{
+        helper.select("#myNav").classList.toggle("menu_width");
+        helper.select(".custom_menu-btn").classList.toggle("menu_btn-style");
+    },
+    openSearch: (focus =true)=>{
+        const searchDiv = helper.select("#searchInput");
+        searchDiv.classList.toggle("d-none");
+        if (focus) searchDiv.querySelector('input[name=search]').focus();
+        helper.select("#toggle_search").classList.toggle("d-none");
+    },
+    checkTos: ()=>{
+        if(helper.select('input[name=tos]').checked)
+        helper.select('button.checkout_btn').disabled = false;
+        else
+        helper.select('button.checkout_btn').disabled = true;
+    }
 }
 
+document.getElementById("searchInput").addEventListener('blur', (e) => {
+    DOM.openSearch(false);
+    alert('see');
+})
 // to get current year
 function getYear() {
     var currentDate = new Date();
