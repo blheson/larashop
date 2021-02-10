@@ -3,7 +3,7 @@
 <section class="pb-5 container">
         @include('includes.messages')
         <h2>Cart</h2>
-        <table class="table table-condensed">
+        <table class="table table-condensed cartTable">
                 <thead>
                         <th>Title</th>
                         <th>Item</th>
@@ -21,12 +21,13 @@
                         $price = price($cart['price'] * $cart['quantity']);
                         @endphp
 
-                        <tr class="cartRow">
-                                <td><a href="vegetables/{{$cart['id']}}">{{$cart['title']}}</a></td>
+                        <tr >
+                                
+                                <td><a href="vegetables/{{$cart['id']}}/{{$cart['title']}}">{{$cart['title']}}</a></td>
                                 <td>{{ $cart['price']}}</td>
                                 <td>{{$cart['quantity']}}</td>
                                 <td>{{$price}}</td>
-                                <td><button class="btn btn-sm btn-danger">x</button></td>
+                                <td><form action='cartremove'><input type="hidden" name="productId" value="{{$cart['id']}}"><button class="btn btn-sm btn-danger">x</button></form></td>
                         </tr>
                         @empty
                         <p>No items in cart</p>

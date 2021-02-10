@@ -25,6 +25,7 @@ Route::get('/contact', [ContactUsController::class, 'index']);
 Route::get('/checkout', [PagesController::class, 'checkout']);
 Route::get('/pay', [PagesController::class, 'pay']);
 Route::post('/contact', [ContactUsController::class, 'store']);
+Route::get('/cartremove', [CartController::class, 'removeCartItem']);
 
 Route::get('/vegetables/{id}/{title}', [VegetablesController::class, 'show']);
 Route::resources([

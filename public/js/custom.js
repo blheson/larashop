@@ -1,6 +1,9 @@
 const helper = {
     select: (dom)=>{
         return document.querySelector(dom);
+    },
+    selectAll: (dom)=>{
+        return document.querySelectorAll(dom);
     }
 }
 const DOM = {
@@ -22,9 +25,9 @@ const DOM = {
     }
     ,
     cartRow:()=>{
-        helper.select('.cartRow').addEventListener('click',(e)=>{
-            alert(e.target().parent)
-        })
+        // helper.select('.cartTable').addEventListener('click',(e)=>{
+        //     alert(e.target.parentNode.parentNode.querySelector('input[name=productId').value)
+        // })
     }
 }
 
@@ -42,7 +45,7 @@ function getYear() {
 getYear();
 
 
-
+DOM.cartRow();
 /** google_map js **/
 
 function myMap() {

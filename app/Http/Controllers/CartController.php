@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
     protected $cart;
-    public function __construct(){
-
+    public function __construct()
+    {
     }
     /**
      * Display a listing of the resource.
@@ -22,8 +22,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        $data = [];
-        return view('cart.index', ['data' => $data]);
+        // $data = [];
+        return view('cart.index');
     }
 
     /**
@@ -34,6 +34,19 @@ class CartController extends Controller
     public function create()
     {
         //
+    }
+    /**
+     * Remove an Item from cart
+     * @param int $index
+     * @return \Illuminate\Http\Response
+     */
+    public function removeCartItem(Request $request)
+    {
+        $productId = $request->productId;
+        $cartItems = session()->get('cart');
+        unset($cartItems[$productId]);
+        $this->finalStore($request, $cartItems);
+        return redirect('/cart');
     }
     private function initCart()
     {
@@ -53,31 +66,28 @@ class CartController extends Controller
         $newItems = [
             'id' => $id,
             'quantity' => (int) $request->quantity,
-            'price'=> $price,
-            'title'=> $request->title
+            'price' => $price,
+            'title' => $request->title
         ];
         if (is_array($cartItems)) {
             $cartItems[$id] = $newItems;
         } else {
             $cartItems = [$id => $newItems];
         }
-
-
+        $this->finalStore($request, $cartItems);
+        return redirect(url()->previous());
+    }
+    public function finalStore($request, $cartItems)
+    {
         session()->put('cart', $cartItems);
         $user_id = getUserId($request);
         $cart = Cart::updateOrCreate([
             'user_id' => $user_id
         ], [
-            'items' => json_encode($request->session()->get('cart'))
+            'items' => json_encode($cartItems)
         ]);
-        if ($cart)
-            $request->session()->flash('success', 'Item added to cart successfully');
-        else
-            $request->session()->flash('error', 'Error in cart');
-
-       return redirect(url()->previous());
+        flashSession($cart, 'Item added to cart successfully', 'Error in cart');
     }
-
     /**
      * Display the specified resource.
      *
