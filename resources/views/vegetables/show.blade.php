@@ -12,19 +12,22 @@
     }
 </style>
 @include('includes.breadcrumb')
-<section class="productSection">
+
+<section class="productSection container">
     <div class="row2">
         <div>
             <img src="/images/p2.png" alt="">
         </div>
         <div>
+            @include('includes.messages')
             <h2>{{$vegetable->title}}</h2>
             <span>Product ID: {{$vegetable->id}}</span>
             <hr>
             <div>
                 <p>Price: {{$vegetable->new_price}}</p>
                 <div>
-                    Description: {{$vegetable->description}}
+                    <p>
+                        Description: {{$vegetable->description}}</p>
                 </div>
             </div>
             <div>
@@ -33,11 +36,12 @@
                     <input type="hidden" name="price" value="{{$vegetable->new_price}}" id="">
                     <input type="hidden" name="title" value="{{$vegetable->title}}" id="">
                     <input type="hidden" name="id" value="{{$vegetable->id}}">
-                    <div class="form-group">
-                        <label for="quantity" class="d-flex">Quantity</label>
-                        <input type="number" name="quantity" class="form-control" value="1">
+                    <div class="form-group d-flex">
+                        <label for="quantity" class="d-flex mr-2">Quantity:</label>
+                        <input type="number" name="quantity" class="form-control mr-2" value="1" style="width: 60px;">
+
+                        <button class="btn btn-success addToCart" type="submit">Add to cart</button>
                     </div>
-                    <button class="btn btn-success addToCart" type="submit">Add to cart</button>
                 </form>
                 <div>
                     <a href="/checkout" class="btn btn-success">Checkout</a>

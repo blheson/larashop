@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('content')
 <section class="pb-5 container">
+        @include('includes.messages')
         <h2>Cart</h2>
         <table class="table table-condensed">
                 <thead>
@@ -12,21 +13,20 @@
                 </thead>
                 <tbody>
                         @php
-                        $cartItem = session('cart')??[];
-                       
+                        $cartItems = getCartItems();
                         @endphp
-                        @forelse($cartItem as $cart)
+                        @forelse($cartItems as $cart)
                         @php
 
                         $price = price($cart['price'] * $cart['quantity']);
                         @endphp
 
-                        <tr>
+                        <tr class="cartRow">
                                 <td><a href="vegetables/{{$cart['id']}}">{{$cart['title']}}</a></td>
                                 <td>{{ $cart['price']}}</td>
                                 <td>{{$cart['quantity']}}</td>
                                 <td>{{$price}}</td>
-                                <th><button class="btn btn-sm btn-danger">x</button></th>
+                                <td><button class="btn btn-sm btn-danger">x</button></td>
                         </tr>
                         @empty
                         <p>No items in cart</p>

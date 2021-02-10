@@ -20,6 +20,12 @@ const DOM = {
         else
         helper.select('button.checkout_btn').disabled = true;
     }
+    ,
+    cartRow:()=>{
+        helper.select('.cartRow').addEventListener('click',(e)=>{
+            alert(e.target().parent)
+        })
+    }
 }
 
 document.getElementById("searchInput").addEventListener('blur', (e) => {

@@ -34,18 +34,17 @@
         </div>
         <!-- header section strats -->
         @include('includes.header')
-      
+
         <!-- end header section -->
         @yield('slider')
     </div>
-    
-    @yield('breadcrumb')
-       @include('includes.messages')
-     @yield('content')
 
- 
+    @yield('breadcrumb')
+    @yield('content')
+
+
     @include('includes.footer')
- 
+
     <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/bootstrap.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/custom.js')}}"></script>

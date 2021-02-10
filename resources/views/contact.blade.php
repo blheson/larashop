@@ -11,6 +11,7 @@
       </div>
       <div class="row">
         <div class="col-md-6">
+        @include('includes.messages')
           <div class="form_container contact-form">
             <form action="/contact" method="post">
             @csrf

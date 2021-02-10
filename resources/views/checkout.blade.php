@@ -5,12 +5,12 @@
 
         <div class="row">
             <div class="col-md-7">
+            @include('includes.messages')
                 <h2>Check out form</h2>
                 <form action="orders" method="post">
                     @php
-                    $cartItems = session('cart') ??[];
+                    $cartItems = getCartItems();
                     $json = json_encode($cartItems);
-                
                     @endphp
                     @csrf
                     <input type="hidden" name="cartItems" value="{{$json}}">
@@ -79,7 +79,8 @@
                 </table>
                 <table>
                     <tfoot>
-                        <tr><td></td>
+                        <tr>
+                            <td></td>
                             <td>Table:</td>
                         </tr>
                     </tfoot>

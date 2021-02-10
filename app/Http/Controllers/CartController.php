@@ -47,10 +47,8 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        // session()->invalidate();
         $id = (int) $request->id;
         $cartItems  = session()->get('cart');
-        // $product = Vegetable::find($id);
         $price = (float) $request->price;
         $newItems = [
             'id' => $id,
@@ -66,7 +64,6 @@ class CartController extends Controller
 
 
         session()->put('cart', $cartItems);
-        // $user_id = Auth::check() ? $request->session->get('users')['id'] : $request->cookie('larashop_session');  
         $user_id = getUserId($request);
         $cart = Cart::updateOrCreate([
             'user_id' => $user_id

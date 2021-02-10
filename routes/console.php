@@ -18,6 +18,11 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Artisan::command('create-view', function () {
-   echo 'create';
-})->purpose('Display an inspiring quote');
+
+//testing
+Artisan::command('create-view {name} {directory}', function ($name = null, $directory = '') {
+    
+    if (is_null($name))
+        return;
+    echo $name.'.blade.php'.'::directory is'.$directory;
+})->purpose('create view');
