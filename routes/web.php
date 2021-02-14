@@ -6,6 +6,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\VegetablesController;
+use App\Models\Vegetable;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,18 +17,21 @@ use App\Http\Controllers\VegetablesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', [PagesController::class, 'index']);
-Route::get('/index', [PagesController::class, 'index']);
-Route::get('/admin', [PagesController::class, 'admin']);
-Route::get('/about', [PagesController::class, 'about']);
-Route::get('/contact', [ContactUsController::class, 'index']);
-Route::get('/checkout', [PagesController::class, 'checkout']);
+//pages
+Route::view('/', 'home',['homepage', true]);
+Route::redirect('/index', '/');
+Route::middleware('auth')->get('/admin', [PagesController::class, 'admin']);
+Route::view('/about', 'about');
+Route::view('/contact', 'contact');
+//process order
+Route::view('/checkout', 'checkout');
+//process payment
 Route::get('/pay', [PagesController::class, 'pay']);
 Route::post('/contact', [ContactUsController::class, 'store']);
-Route::get('/cartremove', [CartController::class, 'removeCartItem']);
-
-Route::get('/vegetables/{id}/{title}', [VegetablesController::class, 'show']);
+Route::get('/vegetables/{vegetable}/{title}', [VegetablesController::class, 'show'])->name('vegetables.view')->missing(function(){
+    session()->flash('error','Product does not exists');
+    return redirect()->route('vegetables.index');
+});
 Route::resources([
     '/vegetables' => VegetablesController::class,
     '/cart' => CartController::class,

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Cart;
+use App\Http\Controllers\CartController;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -33,23 +35,25 @@ class OrdersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, CartController $cart)
     {
         $order = new Order;
         $user_id = getUserId($request);
-
-        $order->name = $request->name;
+        $order->name = $request->input('name');
         $order->user_id = $user_id;
-        $order->email = $request->email;
-        $order->phone = $request->phone;
-        $order->address = $request->address;
-        $order->cartItems = $request->cartItems;
+        $order->email = $request->input('email');
+        $order->phone = $request->input('phone');
+        $order->address = $request->input('address');
+        $order->cartItems = $request->input('cartItems');
 
-        if ($order->save())
-            $request->session()->flash('success', 'Order saved successfully');
-        else
-            $request->session()->flash('error', 'Error in cart');
-        return redirect('/pay');
+        if (!$order->save()) {
+            $request->session()->flash('error', 'Error in order');
+            return view('checkout');
+        }
+        $request->session()->flash('success', 'Order saved successfully');
+        $cart->destroy($user_id);
+        $request->session()->forget('cart');
+        return view('/pay', ['payment' => $request->payment, 'email' => $request->email, 'totalPrice' => $request->totalPrice]);
     }
 
     /**

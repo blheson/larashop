@@ -12,10 +12,10 @@ class ContactUsController extends Controller
     */
     public function store(Request $request){
         $contact = new Contact;
-        $contact->name= $request->name;
-        $contact->phone= $request->phone;
-        $contact->email= $request->email;
-        $contact->message= $request->message;
+        $contact->name= $request->input('name');
+        $contact->phone= $request->input('phone');
+        $contact->email= $request->input('email');
+        $contact->message= $request->input('message');
         $contact->save();
         flashSession($contact, 'message successfully sent', 'there was an error');
         return $this->index();

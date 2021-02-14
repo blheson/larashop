@@ -1,29 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 /**
  * Format price
- * @param float price
+ * @param mixed price
  * @param int decimal
  * @return string
  */
-function price(float $price, int $decimal = 2)
+function price($price, int $decimal = 2): string
 {
-    return "N" . number_format($price, $decimal);
+    return "N" . number_format((float)$price, $decimal);
 }
-function getUserId($request)
+/**
+ * Get the current user Id
+ * @param Request $request
+ * @return string
+ */
+function getUserId(Request $request): string
 {
     return Auth::check() ? $request->session->get('users')['id'] : $request->cookie('larashop_session');
 }
-function getCartItems()
+/**
+ * Get cart items in sessions
+ * @return array
+ */
+function getCartItems(): array
 {
     return session('cart') ?? [];
 }
-function flashSession($check, $success, $error)
+/**
+ * @param mixed $check
+ * @param string $success
+ * @param string $error
+ * @return void
+ */
+function flashSession($check, $success, $error): void
 {
-    if ($check)
-        session()->flash('success', $success);
-    else
+    ($check)
+        ? session()->flash('success', $success) :
         session()->flash('error', $error);
 }

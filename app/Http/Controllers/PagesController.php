@@ -19,7 +19,7 @@ class PagesController extends Controller
     }
     public function admin()
     {
-        return view('admin');
+        return view('admin.index');
     }
     public function checkout()
     {

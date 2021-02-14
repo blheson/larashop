@@ -5,15 +5,17 @@
 
         <div class="row">
             <div class="col-md-7">
-            @include('includes.messages')
+                @include('includes.messages')
                 <h2>Check out form</h2>
-                <form action="orders" method="post">
+                <form action="orders" method="post" class="checkoutForm">
                     @php
+                    $finalPrice = 0;
                     $cartItems = getCartItems();
                     $json = json_encode($cartItems);
                     @endphp
                     @csrf
                     <input type="hidden" name="cartItems" value="{{$json}}">
+                    <input type="hidden" name="totalPrice" value="">
                     <div class="form-group">
                         <label for="">
                             Name</label>
@@ -33,6 +35,14 @@
                         <label for="">
                             Address</label>
                         <input type="text" class="form-control" name="address" id="" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Payment Method
+                            <select name="payment" id="" class="form-control">
+                                <option value="online">Online</option>
+                                <option value="card">Card</option>
+                            </select>
+                        </label>
                     </div>
                     <div class="form-group">
                         <label for="">
@@ -64,6 +74,7 @@
                         @forelse($cartItems as $cart)
                         @php
                         $price = $cart['price'] * $cart['quantity'];
+                        $finalPrice+=$price;
                         @endphp
                         <tr>
                             <td><a href="vegetables/{{$cart['id']}}/{{$cart['title']}}">{{$cart['title']}}</a></td>
@@ -71,8 +82,11 @@
                             <td>{{price($price)}}</td>
                         </tr>
                         @empty
-                        <p>no item</p>
-                        @endforelse
+                        <tr>
+                            <td>
+                                <p>no item</p>
+                            </td>
+                        </tr> @endforelse
 
                     </tbody>
 
@@ -81,7 +95,7 @@
                     <tfoot>
                         <tr>
                             <td></td>
-                            <td>Table:</td>
+                            <td>Table: <span class="cartTotal">{{price($finalPrice)}}</span></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -90,4 +104,9 @@
         </div>
     </div>
 </section>
+<script>
+    let finalPrice = <?=$finalPrice?>;
+    let input = document.querySelector('input[name=totalPrice]');
+    input.value = finalPrice;
+</script>
 @endsection

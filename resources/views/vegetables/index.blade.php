@@ -13,7 +13,7 @@
       </div>
       <div class="row">
       @forelse($vegetables as $vegetable)
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-lg-3">
           <div class="box">
             <div class="img-box">
               <img src="images/p1.png" alt="">
@@ -43,7 +43,8 @@
         </a>
       </div> -->
       <!-- //pagination -->
-      <div>
+      <hr>
+      <div class="pagination mt-3">
       {{$vegetables}}
       </div>
     </div>

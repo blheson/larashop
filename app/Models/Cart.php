@@ -9,10 +9,19 @@ class Cart extends Model
 {
     use HasFactory;
     protected $primaryKey = 'user_id';
-        /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['user_id','items'];
+    protected $fillable = ['user_id', 'items'];
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'user_id';
+    }
 }

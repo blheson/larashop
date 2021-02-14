@@ -14,28 +14,55 @@
                 <tbody>
                         @php
                         $cartItems = getCartItems();
+                        $finalPrice = 0;
                         @endphp
                         @forelse($cartItems as $cart)
                         @php
 
-                        $price = price($cart['price'] * $cart['quantity']);
+                        $price = $cart['price'] * $cart['quantity'];
+                        $finalPrice+=$price;
                         @endphp
 
-                        <tr >
-                                
+                        <tr>
                                 <td><a href="vegetables/{{$cart['id']}}/{{$cart['title']}}">{{$cart['title']}}</a></td>
                                 <td>{{ $cart['price']}}</td>
                                 <td>{{$cart['quantity']}}</td>
-                                <td>{{$price}}</td>
-                                <td><form action='cartremove'><input type="hidden" name="productId" value="{{$cart['id']}}"><button class="btn btn-sm btn-danger">x</button></form></td>
+                                <td>{{price($price)}}</td>
+                                <td>
+                                        <form action="cart/{{$cart['id']}}" method="post">@csrf<input name="_method" type="hidden" value="PUT">
+                                                <input type="hidden" name="productId" value="{{$cart['id']}}"><button class="btn btn-sm btn-danger">x</button>
+                                        </form>
+                                </td>
                         </tr>
+
                         @empty
-                        <p>No items in cart</p>
+                        <tr>
+                                <td></td>
+                                <td>
+                                        <p>No items in cart</p>
+                                </td>
+                        </tr>
+
                         @endforelse
                 </tbody>
+
         </table>
+        <div>
+                <table style="display: block;float:right">
+                        <tbody>
+                                <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-right"><span class="text-right">Total: <span class="cartTotal">{{price($finalPrice)}}</span></td>
+                                </tr>
+                        </tbody>
+                </table>
+        </div>
+        <div class="clearfix"></div>
         <div class="d-block">
-                <a class="btn btn-primary float-right" href="checkout">Checkout</a>
+                <a class="btn btn-primary float-right" href="/checkout">Checkout</a>
         </div>
 </section>
 @endsection

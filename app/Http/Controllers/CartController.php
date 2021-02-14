@@ -22,7 +22,6 @@ class CartController extends Controller
      */
     public function index()
     {
-        // $data = [];
         return view('cart.index');
     }
 
@@ -34,19 +33,6 @@ class CartController extends Controller
     public function create()
     {
         //
-    }
-    /**
-     * Remove an Item from cart
-     * @param int $index
-     * @return \Illuminate\Http\Response
-     */
-    public function removeCartItem(Request $request)
-    {
-        $productId = $request->productId;
-        $cartItems = session()->get('cart');
-        unset($cartItems[$productId]);
-        $this->finalStore($request, $cartItems);
-        return redirect('/cart');
     }
     private function initCart()
     {
@@ -60,14 +46,14 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $id = (int) $request->id;
+        $id = (int) $request->input('id');
         $cartItems  = session()->get('cart');
-        $price = (float) $request->price;
+        $price = (float) $request->input('price');
         $newItems = [
             'id' => $id,
-            'quantity' => (int) $request->quantity,
+            'quantity' => (int) $request->input('quantity'),
             'price' => $price,
-            'title' => $request->title
+            'title' => $request->input('title')
         ];
         if (is_array($cartItems)) {
             $cartItems[$id] = $newItems;
@@ -77,7 +63,7 @@ class CartController extends Controller
         $this->finalStore($request, $cartItems);
         return redirect(url()->previous());
     }
-    public function finalStore($request, $cartItems)
+    private function finalStore($request, $cartItems)
     {
         session()->put('cart', $cartItems);
         $user_id = getUserId($request);
@@ -96,7 +82,7 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        //
+        echo $id;
     }
 
     /**
@@ -119,7 +105,10 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cartItems = session()->get('cart');
+        unset($cartItems[$id]);
+        $this->finalStore($request, $cartItems);
+        return redirect('/cart');
     }
 
     /**
@@ -130,6 +119,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cart::destroy($id);
     }
 }

@@ -15,7 +15,7 @@ class VegetablesController extends Controller
     public function index()
     {
         $search = request()->query('search');
-        $data = DB::table('vegetables')->where('title', 'like', '%'.$search.'%')->orderBy('created_at', 'desc')->paginate(10);
+        $data = DB::table('vegetables')->where('title', 'like', '%'.$search.'%')->orderBy('created_at', 'asc')->paginate(12);
 
         return view('vegetables.index', ['vegetables' => $data]);
     }
@@ -38,6 +38,7 @@ class VegetablesController extends Controller
      */
     public function store(Request $request)
     {
+        
         return view('vegetables.store');
     }
 
@@ -47,12 +48,10 @@ class VegetablesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Vegetable $vegetable)
     {
-        $vegetable = Vegetable::find($id);
-        return view('vegetables.show')->with('vegetable', $vegetable);
+        return view('vegetables.show', ['vegetable'=> $vegetable]);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
